@@ -9,6 +9,16 @@
     <h1>{{ first }} {{ last }}</h1>
 
     <p>GitHub Account: {{ github }}</p>
+    <ul>
+        <li>
+
+        {% for item in grades %}
+            {{ item[0] }}
+            {{ item[1] }} 
+        {% endfor %}
+        
+        </li>
+    </ul>
 
 </body>
 </html>
