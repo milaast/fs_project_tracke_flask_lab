@@ -15,14 +15,13 @@ def get_student():
 
     first, last, github = hackbright.get_student_by_github(github)
 
-    grades = hackbright.get_grades_by_github(github)
+    projects = hackbright.get_grades_by_github(github)
 
     html = render_template("student_info.html",
                            first=first,
                            last=last,
                            github=github,
-                           # project_title=project_title,
-                           grades=grades)
+                           projects=projects)
 
     return html
 
@@ -56,12 +55,24 @@ def add_student_to_database():
                            last=last,
                            github=github)
 
-    # get parameters from the form we are creating now,
-    # to pass to this function, which will add to database and then return the
-    # success message that will be printed at the end of this function
 
-    # the template that will get and format the output from make_new_student
-    # function (above)
+@app.route("/project")
+def get_project():
+    """Show information about a project."""
+
+    project = request.args.get('title')
+
+    title, description, max_grade = hackbright.get_project_by_title(project)
+
+    students = hackbright.get_grades_by_title(project)
+
+    html = render_template("project_info.html",
+                           title=title,
+                           description=description,
+                           max_grade=max_grade,
+                           students=students)
+
+    return html
 
 if __name__ == "__main__":
     hackbright.connect_to_db(app)
